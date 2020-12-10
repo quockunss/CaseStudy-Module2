@@ -1,6 +1,7 @@
 package controller;
 
 import model.Product;
+import sun.security.krb5.internal.APOptions;
 import view.App;
 import java.lang.Integer;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class ProductManager {
     Scanner sc = new Scanner(System.in);
     public void insert(){
+
         System.out.println("Nhập thông tin sản phẩm: ");
         try {
             System.out.println("Mã sản phẩm: ");
@@ -29,13 +31,14 @@ public class ProductManager {
             System.out.println("Mô tả: ");
             String desc = sc.nextLine();
 
-            System.out.println("gia tien:");
+            System.out.println("Giá tiền:");
             float price = sc.nextFloat();
 
             Product p = new Product(id,name,quantity,desc,price);
             App.PRODUCTS.add(p);
+            IO.csvWriterProduct("product.csv", p);
         } catch (InputMismatchException em){
-            System.out.println("loi");
+            System.out.println("Lỗi");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -43,8 +46,8 @@ public class ProductManager {
 
 
     public void show(){
-        System.out.println("DAnh sach san pham");
-        String header = String.format("%s%15s%30s%15s%15s", "ma","ten","so luong","gia","ghi chu");
+        System.out.println("Danh sách sản phẩm");
+        String header = String.format("%s%15s%30s%15s%15s", "Mã","Tên","Số lượng","Giá","Mô tả");
         System.out.println(header);
         for(Product p : App.PRODUCTS){
             String infor = String.format("%s%15s%30s%15s%15s", p.getId(),p.getName(),p.getQuantity(),p.getPrice(),p.getDesc());
@@ -55,20 +58,20 @@ public class ProductManager {
 
     public void update(){
         try {
-            System.out.println("nhap ma: ");
+            System.out.println("Nhập mã sản phẩm cần sửa: ");
             Integer id = sc.nextInt();
             Product product = null;
-            for(Product p : App.PRODUCTS){
+            for(Product p : App.getListProducts()){
                 if(p.getId() == id) {
                     product = p;
                     break;
                 }
             }
             if (product == null){
-                System.out.println("ma san pham khong ton tai, nhap lai: ");
+                System.out.println("Mã sản phẩm không tồn tại, mời nhập lại: ");
             }
-            System.out.println("thong tin san pham");
-            String header = String.format("%s%15s%30s%15s%15s","ma","ten","so luong","gia","ghi chu");
+            System.out.println("Thông tin sản phẩm");
+            String header = String.format("%s%15s%30s%15s%15s","Mã","Tên","Số lượng","Giá","Mô tả");
             System.out.println(header);
             String infor = String.format("%s%15s%30s%15s%15s", product.getId(),product.getName(),product.getQuantity(),product.getPrice(),product.getDesc());
             System.out.println(infor);
@@ -87,7 +90,7 @@ public class ProductManager {
                     System.out.println("Mô tả: ");
                     String desc = sc.nextLine();
 
-                    System.out.println("gia tien:");
+                    System.out.println("Giá tiền:");
                     float price = sc.nextFloat();
 
                     App.PRODUCTS.get(i).setName(name);
@@ -101,11 +104,12 @@ public class ProductManager {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        IO.csvWriterProductUpdate("product.csv",  App.PRODUCTS);
     }
 
     public void delete(){
         try {
-            System.out.println("nhap ma: ");
+            System.out.println("Nhập mã sản phẩm cần xóa: ");
             Integer id = sc.nextInt();
             Product product = null;
             for (Product p : App.PRODUCTS){
@@ -117,14 +121,13 @@ public class ProductManager {
             App.PRODUCTS.indexOf(product);
             App.PRODUCTS.remove(App.PRODUCTS.indexOf(product));
             if (product == null){
-                System.out.println("ma san pham khong ton tai, xin nhap lai: ");
+                System.out.println("Mã sản phẩm không tồn tại, mời nhập lại: ");
             }
-
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
+        IO.csvWriterProductUpdate("product.csv",  App.PRODUCTS);
     }
-
     public static Product getById(int id){
         Product product = new Product();
         for(Product p : App.PRODUCTS){
@@ -135,8 +138,6 @@ public class ProductManager {
         }
         return product;
     }
-
-
 
 }
 

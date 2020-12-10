@@ -1,5 +1,6 @@
 package view;
 
+import controller.IO;
 import controller.OrderManager;
 import controller.ProductManager;
 import model.Order;
@@ -13,9 +14,23 @@ import java.util.Scanner;
 
 public class App {
 
-    public static List<Product> PRODUCTS = new ArrayList<Product>();
-    public static List<Order> ORDERS = new ArrayList<Order>();
-    public static List<OrderDetail> ORDERDETAILS = new ArrayList<OrderDetail>();
+    public static ArrayList<Product> PRODUCTS = new ArrayList<Product>();
+    public static void setListProducts(ArrayList<Product> listProduct) {
+        App.PRODUCTS = listProduct;
+    }
+    public static ArrayList<Product> getListProducts() {
+        return PRODUCTS;
+    }
+
+
+
+
+
+    public static ArrayList<Order> ORDERS = new ArrayList<Order>();
+    public static void setListOrders(ArrayList<Order> ListOrder){
+        App.ORDERS = ListOrder;
+    }
+    public static ArrayList<OrderDetail> ORDERDETAILS = new ArrayList<OrderDetail>();
 
     public static void menu(){
         System.out.println("------Danh sách chức năng-----");
@@ -30,6 +45,7 @@ public class App {
 
 
     public static void main(String[] args) {
+        App.setListProducts(IO.readData());
 
         int function = 0;
 

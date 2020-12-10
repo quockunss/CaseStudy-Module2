@@ -12,31 +12,30 @@ public class OrderManager {
 
     Scanner sc = new Scanner(System.in);
     public void order(){
-        System.out.println("mua san pham");
+        System.out.println("-----Mua hàng-----");
         try {
-            System.out.println("ma dat hang");
+            System.out.println("Mã đặt hàng: ");
             int id = sc.nextInt();
             sc.nextLine();
 
-            System.out.println("nhap ten khach hang: ");
+            System.out.println("Nhập tên khách hàng: ");
             String customername = sc.nextLine();
 
-            System.out.println("nhap so dien thoai khach hang: ");
+            System.out.println("Nhập số điện thoại khách hàng: ");
             String phone = sc.nextLine();
 
-            sc.nextLine();
 
-            System.out.println("nhap dia chi khach hang: ");
+            System.out.println("Nhập địa chỉ khách hàng: ");
             String address = sc.nextLine();
 
             Order order = new Order(id,customername,phone,address);
             int productId = -1;
 
             do{
-                System.out.println("nhap ma san pham: ");
+                System.out.println("Nhập mã sản phẩm: ");
                 productId = sc.nextInt();
 
-                System.out.println("nhap so luong: ");
+                System.out.println("Nhập số lượng: ");
                 int quantity = sc.nextInt();
 
                 Product product = null;
@@ -48,7 +47,7 @@ public class OrderManager {
                     }
                 }
                 if (product == null){
-                    System.out.println("ma san pham khong ton tai");
+                    System.out.println("Mã sản phẩm không tồn tại");
                 }
 
                 OrderDetail orderDetail = new OrderDetail();
@@ -71,16 +70,16 @@ public class OrderManager {
 
 
     public void show(){
-        System.out.println("Danh sach dat hang");
-        String header = String.format("%s%15s%30s%30s%", "ma","ten khac hang","so dien thoai","dia chi");
+        System.out.println("Danh sách đặt hàng");
+        String header = String.format("%s%15s%30s%30s", "Mã","Tên khách hàng","Số điện thoại","Địa chỉ");
         System.out.println(header);
         ProductManager productManager = new ProductManager();
 
 
         for(Order order : App.ORDERS){
-            String infor = String.format("%s%15s%30s%30s%", order.getId(),order.getCustomerName(),order.getPhone(),order.getAddress());
+            String infor = String.format("%s%15s%30s%30s", order.getId(),order.getCustomerName(),order.getPhone(),order.getAddress());
             System.out.println(infor);
-            String orderDetailHeader = String.format("%s%30s%10s%30s%30s", "STT","ten san pham","gia","so luong");
+            String orderDetailHeader = String.format("%s%15s%30s%30s", "STT","Tên sản phẩm","Giá","Số lượng");
             System.out.println(orderDetailHeader);
 
             int i = 1;
@@ -88,7 +87,7 @@ public class OrderManager {
 
                 Product p = ProductManager.getById(od.getProductId());
 
-                String orderDetailInfor = String.format("%s%30s%10s%30s%30s", i,p.getName(),od.getPrice(),od.getQuantity());
+                String orderDetailInfor = String.format("%s%15s%30s%30s", i,p.getName(),od.getPrice(),od.getQuantity());
                 System.out.println(orderDetailInfor);
                 i++;
         }
