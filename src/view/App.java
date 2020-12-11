@@ -6,7 +6,6 @@ import controller.ProductManager;
 import model.Order;
 import model.OrderDetail;
 import model.Product;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -21,10 +20,6 @@ public class App {
     public static ArrayList<Product> getListProducts() {
         return PRODUCTS;
     }
-
-
-
-
 
     public static ArrayList<Order> ORDERS = new ArrayList<Order>();
     public static void setListOrders(ArrayList<Order> ListOrder){
@@ -43,12 +38,10 @@ public class App {
         System.out.println("7. Thoát.");
     }
 
-
     public static void main(String[] args) {
         App.setListProducts(IO.readData());
 
         int function = 0;
-
         do {
             menu();
             try {

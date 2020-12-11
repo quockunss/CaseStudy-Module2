@@ -33,23 +33,6 @@ public class IO {
             fileWriter.append(NEW_LINE_SEPARATOR);
 
 
-//            for (int i = 0; i < product.size(); i++) {
-//                fileWriter.append(String.valueOf(product.get(i).getIdProduct()));
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(product.get(i).getNameProduct());
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(String.valueOf(product.get(i).getPrice()));
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(String.valueOf(product.get(i).getAmount()));
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(product.get(i).getManufacturer());
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(product.get(i).getDateOfManufacture());
-//                fileWriter.append(COMMA_DELIMITER);
-//                fileWriter.append(product.get(i).getExpiryDate());
-//                fileWriter.append(NEW_LINE_SEPARATOR);
-//                fileWriter.close();
-//            }
         } catch (IOException exception) {
             exception.printStackTrace();
         } finally {
@@ -97,35 +80,6 @@ public class IO {
                     fileWriter.close();
                 } catch (Exception e) {
                     System.out.println(e);
-                }
-            }
-        }
-    }
-
-    public static void csvReaderProduct(String path) {
-        File file = new File(path);
-        BufferedReader bufferedReader = null;
-        String line = "";
-        try {
-            if (!file.exists()) {
-                System.out.println("File not exits!");
-                return;
-            }
-            bufferedReader = new BufferedReader(new FileReader(path));
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] p = line.split(COMMA_DELIMITER);
-                System.out.println("Product id = " + p[0] + " , name = " + p[1] + " , price " + p[2] + " , amount " + p[3] + " , manufacturer " + p[4] + " , dateOfManufacture " + p[5] + " , expiryDate " + p[6]);
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println(e);
-        } catch (IOException exception) {
-            System.err.println(exception);
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException exception) {
-                    System.err.println(exception);
                 }
             }
         }

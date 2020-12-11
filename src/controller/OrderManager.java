@@ -4,7 +4,6 @@ import model.Order;
 import model.OrderDetail;
 import model.Product;
 import view.App;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,7 +22,6 @@ public class OrderManager {
 
             System.out.println("Nhập số điện thoại khách hàng: ");
             String phone = sc.nextLine();
-
 
             System.out.println("Nhập địa chỉ khách hàng: ");
             String address = sc.nextLine();
@@ -74,7 +72,6 @@ public class OrderManager {
         String header = String.format("%s%15s%30s%30s", "Mã","Tên khách hàng","Số điện thoại","Địa chỉ");
         System.out.println(header);
         ProductManager productManager = new ProductManager();
-
 
         for(Order order : App.ORDERS){
             String infor = String.format("%s%15s%30s%30s", order.getId(),order.getCustomerName(),order.getPhone(),order.getAddress());
