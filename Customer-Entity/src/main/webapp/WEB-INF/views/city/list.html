@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<span th:text="${message} ? ${message} : '' "></span>
+<a href="/create-city">Create new city</a><br/>
+<a href="/provinces">list provinces</a><br/>
+
+<h1>Customers</h1>
+<form>
+    Search by first name:
+    <input name="s" type="text" th:value="${keyword}"/>
+    <input type="submit" value="Search"/>
+</form><br/>
+<table border="1">
+    <thead>
+    <tr>
+        <td>First name</td>
+        <th>Last name</th>
+        <th>Province</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <th:block th:each="city : ${cities}">
+        <tbody>
+        <tr>
+            <td th:text="${city.firstName}"></td>
+            <td th:text="${city.lastName}"></td>
+            <td th:text="${city.country.name}"></td>
+            <td><a th:href="@{/edit-city/__${city.id}__ }">Edit</a></td>
+<!--                        <td><a th:href="@{/delete-city/__${city.id}__ }">Delete</a></td>-->
+            <td><form th:action="@{/city/delete}" th:method="post" >
+                <input th:type="submit" th:value="delete" />
+                <input th:type="hidden" th:value="${city.id}" th:name="id"/>
+            </form></td>
+        </tr>
+        </tbody>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/cities'(s=${keyword}, page=${cities.number})}" th:if="${cities.hasPrevious()}">Previous</a>
+    <span th:text="${cities.number + 1}"></span>/<span th:text="${cities.totalPages}"></span>
+    <a th:href="@{'/cities'(s=${keyword}, page=${cities.number + 2})}" th:if="${cities.hasNext()}">Next</a>
+</div>
+</body>
+</html>
